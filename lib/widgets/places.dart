@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -20,6 +21,7 @@ class PlaceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 220.w,
       margin: EdgeInsets.only(right: 8.w),
 
       child: Column(
@@ -36,22 +38,24 @@ class PlaceCard extends StatelessWidget {
           ),
 
           SizedBox(height: 8.h),
+           Row(
+              children: [
+                Expanded(child: Text(name.tr(), style: TextStyle(fontSize: 18.sp, color: Theme.of(context).textTheme.bodyLarge?.color))),
+
+                Row(
+                  children: [
+                    Text(rating.toString().tr()),
+                    Icon(Icons.star, color: Colors.orange, size: 16.sp),
+                  ],
+                ),
+              ],
+            ),
+
           Row(
             children: [
-              Text(name, style: TextStyle(fontSize: 18.sp)),
-              SizedBox(width: 67.w),
-              Row(
-                children: [
-                  Text(rating.toString()),
-                  Icon(Icons.star, color: Colors.orange, size: 16.sp),
-                ],
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              Text(type, style: TextStyle(fontSize: 14.sp, color: Colors.grey)),
-              Text(time, style: TextStyle(fontSize: 14.sp, color: Colors.grey)),
+              Text(type.tr(), style: TextStyle(fontSize: 14.sp, color: Colors.grey)),
+              Text(" "),
+              Text(time.tr(), style: TextStyle(fontSize: 14.sp, color: Colors.grey)),
             ],
           ),
         ],

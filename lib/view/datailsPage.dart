@@ -1,8 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:log/models/cart_item.dart';
-
 import '../cubit/dart/cart_cubit.dart';
 import '../widgets/BestPriceListView.dart';
 import 'home_page.dart';
@@ -31,15 +31,26 @@ class _DetailsPageState extends State<DetailsPage> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        leading: IconButton(
+        leading:
+        Builder(
+        builder: (context)
+    {
+      return
+        IconButton(
           onPressed: () {
             Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => HomePage()),
-              (route) => false,
+                  (route) => false,
             );
           },
-          icon: Icon(Icons.keyboard_arrow_left, size: 35.sp, color: Colors.white),
+          icon: Icon(context.locale.languageCode == 'ar'
+              ? Icons.keyboard_arrow_right
+              : Icons.keyboard_arrow_left,
+              size: 35.sp, color: Colors.white),
+        );
+
+    }
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -80,21 +91,21 @@ class _DetailsPageState extends State<DetailsPage> {
                 children: [
                   Row(
                     children: [
-                      Text(widget.name, style: TextStyle(fontSize: 30.sp)),
+                      Text(widget.name, style: TextStyle(fontSize: 30.sp,color: Theme.of(context).textTheme.bodyLarge?.color)),
                       Text(
-                        ", 110g",
+                        ", 110g".tr(),
                         style: TextStyle(color: Colors.grey, fontSize: 30.sp),
                       ),
                     ],
                   ),
                   Text(
-                    "It’s a sweet dessert made of cream cheese, sugar, and eggs on a base of crushed cookies or graham crackers.",
+                    "dessert_description".tr(),
                   ),
 
                   SizedBox(height: 20.h),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text("Best prices", style: TextStyle(fontSize: 25.sp)),
+                    child: Text("best_prices".tr(), style: TextStyle(fontSize: 25.sp,color: Theme.of(context).textTheme.bodyLarge?.color)),
                   ),
                   SizedBox(height: 15.h),
                   BestPriceList(),
@@ -110,9 +121,11 @@ class _DetailsPageState extends State<DetailsPage> {
                         ),
                       );
 
-                      ScaffoldMessenger.of(context).showSnackBar(
+                      final messenger = ScaffoldMessenger.of(context);
+                      messenger.hideCurrentSnackBar();
+                      messenger.showSnackBar(
                         SnackBar(
-                          content: Text("${widget.name} added to cart"),
+                          content: Text("${widget.name} " '${'added_to_cart'.tr()} '),
                           backgroundColor: Colors.green,
                         ),
                       );
@@ -130,18 +143,18 @@ class _DetailsPageState extends State<DetailsPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "\$${widget.price.toStringAsFixed(2)}",
+                            "\$${widget.price.toStringAsFixed(2)}".tr(),
                             style: TextStyle(color: Colors.white, fontSize: 20.sp),
                           ),
                           Text(
-                            "   |   ",
+                            "   |   ".tr(),
                             style: TextStyle(
                               color: Colors.grey[200],
                               fontSize: 20.sp,
                             ),
                           ),
                           Text(
-                            "Add to cart",
+                            "add_to_cart".tr(),
                             style: TextStyle(color: Colors.white, fontSize: 16.sp),
                           ),
                         ],

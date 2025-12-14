@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,9 +37,9 @@ class CartItemWidget extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Text(item.name, style: TextStyle(fontSize: 20.sp)),
+                    Text(item.name.tr(), style: TextStyle(fontSize: 20.sp,color: Theme.of(context).textTheme.bodyLarge?.color)),
                     Text(
-                      ",230g",
+                      " ,230g".tr(),
                       style: TextStyle(fontSize: 20.sp, color: Colors.grey),
                     ),
                   ],
@@ -49,7 +50,7 @@ class CartItemWidget extends StatelessWidget {
                   children: [
 
                       Text(
-                        "\$${(item.price * item.quantity).toStringAsFixed(2)}",
+                        "\$${(item.price * item.quantity).toStringAsFixed(2)}".tr(),
                         style: TextStyle(fontSize: 18.sp, color: Colors.orange),
                       ),
 
@@ -70,15 +71,15 @@ class CartItemWidget extends StatelessWidget {
 
                             children: [
                               IconButton(
-                                icon: Icon(Icons.remove, size: 15.sp),
+                                icon: Icon(Icons.remove, size: 15.sp,color: Colors.black,),
                                 onPressed: () => cartCubit.decreaseQuantity(index),
                               ),
                               Text(
                                 item.quantity.toString(),
-                                style: TextStyle(fontSize: 12.sp),
+                                style: TextStyle(fontSize: 12.sp,color: Colors.black),
                               ),
                               IconButton(
-                                icon: Icon(Icons.add, size: 15.sp),
+                                icon: Icon(Icons.add, size: 15.sp,color: Colors.black),
                                 onPressed: () => cartCubit.increaseQuantity(index),
                               ),
                             ],

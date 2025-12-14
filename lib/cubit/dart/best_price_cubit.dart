@@ -8,17 +8,17 @@ class BestPriceCubit extends Cubit<List<BestPriceItem>> {
       : super([
     BestPriceItem(
       image: "assets/images/BestPrice/cheescake.webp",
-      name: "Cheese cake",
+      name: "cheese_cake",
       price: 2.00,
     ),
     BestPriceItem(
       image: "assets/images/BestPrice/Capuccino.jpg",
-      name: "Cappuccino",
+      name: "cappuccino",
       price: 1.80,
     ),
     BestPriceItem(
       image: "assets/images/BestPrice/MangoJuice.jpg",
-      name: "Mango",
+      name: "mango",
       price: 1.95,
     ),
   ]);

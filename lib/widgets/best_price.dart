@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -49,13 +50,18 @@ class _BestPriceState extends State<BestPrice> {
                     cartCubit.addItem(
                       CartItem(
                         image: widget.image,
-                        name: widget.name,
+                        name: widget.name.tr(),
                         price: widget.price,
                       ),
                     );
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("${widget.name} added to cart"),backgroundColor: Colors.green,),
+                    final messenger = ScaffoldMessenger.of(context);
+                    messenger.hideCurrentSnackBar();
+                    messenger.showSnackBar(
+                      SnackBar(
+                        content: Text("${widget.name} " '${'added_to_cart'.tr()} '),
+                        backgroundColor: Colors.green,
+                      ),
                     );
                   },
                   icon: Icon(Icons.add),
@@ -70,9 +76,10 @@ class _BestPriceState extends State<BestPrice> {
               ),
             ],
           ),
-          Text(widget.name, style: TextStyle(fontSize: 18.sp)),
+          Spacer(),
+          Text(widget.name, style: TextStyle(fontSize: 18.sp,color: Theme.of(context).textTheme.bodyLarge?.color)),
           Text(
-            "\$${widget.price.toStringAsFixed(2)}",
+            "\$${widget.price.toStringAsFixed(2)}".tr(),
             style: TextStyle(fontSize: 14.sp, color: Colors.grey),
           ),
         ],

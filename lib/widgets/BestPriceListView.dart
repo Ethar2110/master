@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,7 +21,7 @@ class _BestPriceListState extends State<BestPriceList> {
       height: 170.h,
       child: BlocBuilder<BestPriceCubit, List<BestPriceItem>>(
         builder: (context, bestPrices) {
-          return ListView.builder( // <- must RETURN this
+          return ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: bestPrices.length,
             itemBuilder: (context, index) {
@@ -32,7 +33,7 @@ class _BestPriceListState extends State<BestPriceList> {
                     MaterialPageRoute(
                       builder: (context) => DetailsPage(
                         image: item.image,
-                        name: item.name,
+                        name: item.name.tr(),
                         price : item.price,
                       ),
                     ),
@@ -41,7 +42,7 @@ class _BestPriceListState extends State<BestPriceList> {
                 child:  BestPrice(
                     image: item.image,
                     price: item.price,
-                    name: item.name,
+                    name: item.name.tr(),
                   ),
 
               );

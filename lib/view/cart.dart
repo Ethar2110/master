@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,11 +27,11 @@ class _CartPageState extends State<CartPage> {
           padding: EdgeInsets.only(top: 10.h),
           child: Row(
             children: [
-              Text("Cart, ", style: TextStyle(fontSize: 28.sp)),
+              Text("${'cart'.tr()}, ", style: TextStyle(fontSize: 28.sp)),
               BlocBuilder<CartCubit, CartState>(
                 builder: (context, state) {
                   return Text(
-                    "${state.items.length} items",
+                    "${state.items.length} "'${'item'.tr()}',
                     style: TextStyle(color: Colors.grey, fontSize: 28.sp),
                   );
                 },
@@ -57,7 +58,7 @@ class _CartPageState extends State<CartPage> {
       body: BlocBuilder<CartCubit, CartState>(
         builder: (context, state) {
           if (state.items.isEmpty) {
-            return Center(child: Text("Your cart is empty"));
+            return Center(child: Text("your_cart_is_empty".tr() , style: TextStyle(fontSize: 20,color: Theme.of(context).textTheme.bodyLarge?.color),));
           }
 
           return Padding(
@@ -67,8 +68,8 @@ class _CartPageState extends State<CartPage> {
                 Row(
                   children: [
                     Text(
-                      "Standerd delivery, 40-60 minutes",
-                      style: TextStyle(fontSize: 14.sp),
+                      "standard_delivery".tr(),
+                      style: TextStyle(fontSize: 14.sp,color: Theme.of(context).textTheme.bodyLarge?.color),
                     ),
                     SizedBox(width: 12.w),
                     Container(
@@ -80,9 +81,10 @@ class _CartPageState extends State<CartPage> {
                         borderRadius: BorderRadius.circular(30.r),
                         color: Colors.pink[50],
                       ),
-                      child: Text("Free"),
+                      child: Text("free".tr(),style: TextStyle(color: Colors.black),),
                     ),
-                    SizedBox(width: 30.w),
+                    // SizedBox(width: 30.w),
+                    Spacer(),
                     Radio(
                       value: 1,
                       fillColor: MaterialStateProperty.resolveWith<Color>((
@@ -113,8 +115,8 @@ class _CartPageState extends State<CartPage> {
                 Row(
                   children: [
                     Text(
-                      "Express, 15-25 minutes ",
-                      style: TextStyle(fontSize: 14.sp),
+                      "express_delivery".tr(),
+                      style: TextStyle(fontSize: 14.sp,color: Theme.of(context).textTheme.bodyLarge?.color),
                     ),
                     Icon(Icons.bolt, color: Colors.orange),
                     SizedBox(width: 15.w),
@@ -127,10 +129,10 @@ class _CartPageState extends State<CartPage> {
                         borderRadius: BorderRadius.circular(30.r),
                         color: Colors.pink[50],
                       ),
-                      child: Text("\$2.00"),
+                      child: Text("\$2.00".tr(),style: TextStyle(color: Colors.black),),
                     ),
-                    SizedBox(width: 50.w),
-
+                    // SizedBox(width: 30.w),
+                    Spacer(),
                     Radio(
                       value: 2,
                       fillColor: MaterialStateProperty.resolveWith<Color>((
@@ -172,16 +174,16 @@ class _CartPageState extends State<CartPage> {
                 SizedBox(height: 18.h),
 
                 Container(
+                  padding: EdgeInsets.symmetric(horizontal: 18.w),
                   child: Row(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 18.w, right: 135.w),
-                        child: Text(
-                          "Promocode",
+                       Text(
+                          "promocode".tr(),
                           style: TextStyle(color: Colors.grey.shade500),
                         ),
-                      ),
-                      Text("TASTE2025"),
+
+                      Spacer(),
+                      Text("TASTE2025".tr(),style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),),
                       SizedBox(width: 5.w),
                       Icon(Icons.check, size: 20.sp, color: Colors.orange),
                     ],
@@ -235,7 +237,7 @@ class _CartPageState extends State<CartPage> {
                               ),
                             ),
                             Text(
-                              "Confirm Order",
+                              "confirm_order".tr(),
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16.sp,
