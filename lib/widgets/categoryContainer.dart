@@ -6,23 +6,32 @@ class CustomGridItem extends StatelessWidget {
   final String text;
   final String imagePath;
   final bool isSpecial;
+  final bool isSelected;
 
   const CustomGridItem({
     super.key,
     required this.text,
     required this.imagePath,
     this.isSpecial = false,
+    this.isSelected = false
   });
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    final Color backgroundColor = isSpecial
-        ? Colors.orange
+    final Color backgroundColor =
+    isSpecial
+        ? (isSelected ? Colors.orange[800]! : Colors.orange)
         : isDark
-        ? Colors.grey[800]!
-        : Colors.pink[50]!;
+        ? (isSelected
+        ? Colors.grey[700]!
+        : Colors.grey[800]!)
+        : (isSelected
+        ? Colors.pink[400]!.withOpacity(0.3)
+        : Colors.pink[50]!);
+
+
 
     final Color textColor = isSpecial
         ? Colors.white
@@ -30,10 +39,22 @@ class CustomGridItem extends StatelessWidget {
         ? Colors.white
         : Colors.black;
 
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
+      curve: Curves.easeInOut,
+      transform: isSelected ? Matrix4.identity().scaled(1.03) : Matrix4.identity(),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(10.r),
+        boxShadow: isSelected
+            ? [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          )
+        ]
+            : [],
       ),
       child: Stack(
         children: [
@@ -65,4 +86,5 @@ class CustomGridItem extends StatelessWidget {
       ),
     );
   }
+
 }

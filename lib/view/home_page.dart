@@ -1,9 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:log/cubit/dart/category_cubit.dart';
 import 'package:log/view/cart.dart';
 import 'package:log/view/profile.dart';
 import 'package:log/widgets/places.dart';
+import '../cubit/dart/category_state.dart';
 import '../widgets/BestPriceListView.dart';
 import '../widgets/categoryContainer.dart';
 
@@ -48,50 +51,38 @@ class _HomePageState extends State<HomePage> {
             children: [
               SizedBox(
                 height: 250.h,
-                child: GridView(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 8,
-                    mainAxisSpacing: 8,
-                    childAspectRatio: 1,
-                  ),
-                  children: [
-                    CustomGridItem(
-                      text: "specials_of_the_week".tr(),
-                      imagePath: 'assets/images/categories/discount.png',
-                      isSpecial: true,
-                    ),
-                    CustomGridItem(
+                child: BlocBuilder<CategoryCubit,CategoryState>(
+                    builder: (context,state){
+                      final cubit = context.read<CategoryCubit>();
+                      return GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: state.categories.length,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 8,
+                            mainAxisSpacing: 8,
+                            childAspectRatio: 1,
+                          ),
+                          itemBuilder: (context,index){
+                            final item = state.categories[index];
+                            final isSelected = cubit.selectedIndex == index;
+                            return GestureDetector(
+                              onTap: () {
+                                cubit.selectIndex(index);
+                              },
+                              child: CustomGridItem(
 
-                      text: "cookies".tr(),
-                      imagePath: 'assets/images/categories/cookies.png',
-                    ),
-                    CustomGridItem(
+                                text: item["text"],
+                                imagePath: item["image"],
+                                isSpecial: item["isSpecial"] ?? false,
+                                isSelected: isSelected,
+                              ),
+                            );
 
-                      text: "drinks".tr(),
-                      imagePath: 'assets/images/categories/colawater.png',
-
-                    ),
-                    CustomGridItem(
-
-                      text: "desserts".tr(),
-                      imagePath: 'assets/images/categories/desert.png',
-
-                    ),
-                    CustomGridItem(
-
-                      text: "pizza".tr(),
-                      imagePath: 'assets/images/categories/pizzaa.png',
-
-                    ),
-                    CustomGridItem(
-
-                      text: "salads".tr(),
-                      imagePath: 'assets/images/categories/salad.png',
-
-                    ),
-                  ],
-                ),
+                          });
+                      
+                    }),
               ),
               Align(
                 alignment: AlignmentDirectional.centerStart,

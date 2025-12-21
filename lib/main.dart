@@ -5,9 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:log/themes/dark_colors.dart';
 import 'package:log/themes/light_colors.dart';
 import 'package:log/view/home_page.dart';
-
 import 'cubit/dart/best_price_cubit.dart';
 import 'cubit/dart/cart_cubit.dart';
+import 'cubit/dart/category_cubit.dart';
 import 'cubit/dart/theme_cubit.dart';
 import 'cubit/dart/theme_state.dart';
 
@@ -24,6 +24,10 @@ void main() async {
           BlocProvider<CartCubit>(create: (context) => CartCubit()),
           BlocProvider(create: (context) => BestPriceCubit()),
           BlocProvider(create: (_) => ThemeCubit()),
+          BlocProvider(
+            create: (_) => CategoryCubit(),
+          )
+
         ],
         child: const MyApp(),
       ),
