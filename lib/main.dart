@@ -4,15 +4,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:log/themes/dark_colors.dart';
 import 'package:log/themes/light_colors.dart';
-import 'package:log/view/home_page.dart';
+import 'package:log/view/wrapper.dart';
+import 'cubit/dart/auth_cubit.dart';
 import 'cubit/dart/best_price_cubit.dart';
 import 'cubit/dart/cart_cubit.dart';
 import 'cubit/dart/category_cubit.dart';
 import 'cubit/dart/theme_cubit.dart';
 import 'cubit/dart/theme_state.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await EasyLocalization.ensureInitialized();
   runApp(
     EasyLocalization(
@@ -24,9 +27,9 @@ void main() async {
           BlocProvider<CartCubit>(create: (context) => CartCubit()),
           BlocProvider(create: (context) => BestPriceCubit()),
           BlocProvider(create: (_) => ThemeCubit()),
-          BlocProvider(
-            create: (_) => CategoryCubit(),
-          )
+          BlocProvider(create: (_) => CategoryCubit(),),
+          BlocProvider(create: (_) => AuthCubit(),)
+
 
         ],
         child: const MyApp(),
@@ -48,6 +51,7 @@ class MyApp extends StatelessWidget {
         return BlocBuilder<ThemeCubit, ThemeState>(
           builder: (context, themeState) {
             return MaterialApp(
+
               debugShowCheckedModeBanner: false,
 
 
@@ -113,7 +117,7 @@ class MyApp extends StatelessWidget {
               ),
               themeMode: themeState.isDark ? ThemeMode.dark : ThemeMode.light,
 
-              home: HomePage(),
+              home: Wrapper(),
             );
           },
         );
