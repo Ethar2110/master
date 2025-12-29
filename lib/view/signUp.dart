@@ -64,40 +64,32 @@ class SignUpScreen extends StatelessWidget {
 
             CustomButton(
               text: "Sign Up",
-              onPressed: () async {
-                // final Username = nameController.text;
-                final email = emailController.text;
-                final password = passwordController.text;
-                context.read<AuthCubit>().signUp(
-                  email: email,
-                  password: password,
-                );
-                final user = FirebaseAuth.instance.currentUser;
-                // if (user != null) {
-                //   await user.sendEmailVerification();
-                //
-                //   Navigator.pushReplacement(
-                //     context,
-                //     MaterialPageRoute(builder: (_) => Verify()),
-                //   );
-                //
-                //   Get.snackbar('Success', 'Verification email sent!', snackPosition: SnackPosition.BOTTOM);
-                if (user != null) {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => Wrapper()),
-                    (route) => false,
+                onPressed: () async {
+                  final email = emailController.text.trim();
+                  final password = passwordController.text.trim();
+
+                  final error = await context.read<AuthCubit>().signUp(
+                    email: email,
+                    password: password,
                   );
-                } else {
-                  // Show error if user is null
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Sign up failed. Please try again.'),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
+
+                  if (error == null) {
+                    // ✅ signup succeeded
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (_) => Wrapper()),
+                          (route) => false,
+                    );
+                  } else {
+                    // ❌ signup failed
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(error),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
                 }
-              },
             ),
           ],
         ),

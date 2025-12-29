@@ -51,10 +51,22 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
             CustomButton(
               text: "Send Reset Link",
-              onPressed: () {
-                final email = emailController.text;
-                context.read<AuthCubit>().reset(email: email);
+                onPressed: () async {
+                  final email = emailController.text.trim();
+
+                  final error = await context.read<AuthCubit>().reset(email: email);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        error == null
+                            ? 'If an account exists, a reset link has been sent.'
+                            : error,
+                      ),
+                    ),
+                  );
                 }
+
 
             ),
 

@@ -100,13 +100,25 @@ class AuthCubit extends Cubit<AuthenticationState> {
       return null; // success
     } on FirebaseAuthException catch (e) {
       return e.code ?? 'signup_failed';
-    } catch (e) {
+    } catch (e, s) {
+      print('SIGNUP ERROR: $e');
+      print('STACKTRACE: $s');
       return e.toString();
     }
   }
 
 
-  Future<void> reset({required String email}) async {
-    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  Future<String?> reset({required String email}) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(
+        email: email.trim(),
+      );
+      return null;
+    } on FirebaseAuthException catch (e) {
+      return e.code;
+    } catch (e) {
+      return 'unknown_error';
+    }
   }
+
 }

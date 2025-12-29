@@ -24,7 +24,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   void initState() {
     super.initState();
-    _obscureText = widget.isPassword; // initially hide if it's password
+    _obscureText = widget.isPassword;
   }
 
   @override
